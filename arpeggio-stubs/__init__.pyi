@@ -8,8 +8,7 @@ _ParsingExpressionLike__1 = (
     _ParsingExpressionLike__0
     | _typing.Sequence[_ParsingExpressionLike__0]
     | _typing.Sequence[
-        _ParsingExpressionLike__0
-        | _typing.Sequence[_ParsingExpressionLike__0 | object]
+        _ParsingExpressionLike__0 | _typing.Sequence[_ParsingExpressionLike__0 | object]
     ]
 )
 
@@ -107,9 +106,11 @@ class ParseTreeNode:
 
 class Terminal(ParseTreeNode):
     value: str
+    def flat_str(self) -> str: ...
     def __eq__(self, other: _typing.Any) -> bool: ...
 
-class NonTerminal(ParseTreeNode, _typing.List[ParseTreeNode]): ...
+class NonTerminal(ParseTreeNode, _typing.List[ParseTreeNode]):
+    def flat_str(self) -> str: ...
 
 class PTNodeVisitor(DebugPrinter):
     def __init__(
