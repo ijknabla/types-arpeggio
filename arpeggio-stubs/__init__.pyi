@@ -8,8 +8,7 @@ _ParsingExpressionLike__1 = (
     _ParsingExpressionLike__0
     | _typing.Sequence[_ParsingExpressionLike__0]
     | _typing.Sequence[
-        _ParsingExpressionLike__0
-        | _typing.Sequence[_ParsingExpressionLike__0 | object]
+        _ParsingExpressionLike__0 | _typing.Sequence[_ParsingExpressionLike__0 | object]
     ]
 )
 
