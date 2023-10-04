@@ -54,7 +54,7 @@ def test_parser_python_init(
         autokwd=autokwd,
         debug=debug,
         ignore_case=ignore_case,
-        # memoization=memoization,  # TODO: match arpeggio version
+        memoization=memoization,
         reduce_tree=reduce_tree,
         skipws=skipws,
         ws=ws,
