@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "types-arpeggio"
+version = "0.0.1-dev"
+description = ""
+authors = ["ijknabla <ijknabla@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
