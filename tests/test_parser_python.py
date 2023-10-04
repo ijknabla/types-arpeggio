@@ -7,6 +7,8 @@ from typing import TYPE_CHECKING, Any
 import pytest
 from arpeggio import DEFAULT_WS, EOF, ParserPython, Sequence
 
+from . import DefaultAndValues, iter_pos_args
+
 if TYPE_CHECKING:
     from arpeggio import _ParsingExpressionLike, _SyntaxClasses
 
@@ -25,39 +27,30 @@ def empty() -> _ParsingExpressionLike:
     return EOF
 
 
-def pos_arguments_generator(
-    *args: tuple[Any, Any]
-) -> Generator[tuple[Any, ...], None, None]:
-    for i in range(0, len(args) + 1):
-        yield tuple(arg for _, arg in args[:i]), *(
-            arg for _, arg in args[:i]
-        ), *(default for default, _ in args[i:])
-
-
 @pytest.mark.parametrize(
-    """
-    args,
-    comment_def,
-    syntax_classes,
-    skipws,
-    ws,
-    reduce_tree,
-    autokwd,
-    ignore_case,
-    memoization,
-    """,
-    pos_arguments_generator(
-        (None, empty),
-        ({}, {"Sequence": Sequence}),
-        (True, False),
-        (DEFAULT_WS, ""),
-        (False, True),
-        (False, True),
-        (False, True),
-        (False, True),
+    "args,"
+    "comment_def,"
+    "syntax_classes,"
+    "skipws,"
+    "ws,"
+    "reduce_tree,"
+    "autokwd,"
+    "ignore_case,"
+    "memoization,",
+    iter_pos_args(
+        DefaultAndValues["_ParsingExpressionLike | None"](None, [empty]),
+        DefaultAndValues["_SyntaxClasses | None"](
+            {}, [{"Sequence": Sequence}]
+        ),
+        DefaultAndValues[bool](True, [False]),
+        DefaultAndValues[str](DEFAULT_WS, ["\u3000"]),
+        DefaultAndValues[bool](False, [True]),
+        DefaultAndValues[bool](False, [True]),
+        DefaultAndValues[bool](False, [True]),
+        DefaultAndValues[bool](False, [True]),
     ),
 )
-def test_parser_python_init_args(
+def test_parser_python_positional_arguments(
     args: tuple[Any, ...],
     comment_def: _ParsingExpressionLike | None,
     syntax_classes: _SyntaxClasses | None,
@@ -69,6 +62,7 @@ def test_parser_python_init_args(
     memoization: bool,
 ) -> None:
     parser = ParserPython(empty, *args)
+    assert (parser.comments_model is None) == (comment_def is None)
     assert parser.syntax_classes == syntax_classes
     assert parser.skipws == skipws
     assert parser.ws == ws
