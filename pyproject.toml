@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "types-arpeggio"
-version = "0.0.1a0"
+version = "0.0.1-dev"
 description = ""
 authors = ["ijknabla <ijknabla@gmail.com>"]
 readme = "README.md"
