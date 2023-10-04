@@ -1,6 +1,8 @@
 import typing as _typing
 from typing import IO as _IO
 
+from typing_extensions import Final as _Final
+from typing_extensions import Literal as _Literal
 from typing_extensions import NotRequired as _NotRequired
 from typing_extensions import TypedDict as _TypedDict
 
@@ -18,6 +20,8 @@ _ParsingExpressionLike__1 = (
 )
 
 _ParsingExpressionLike = _ParsingExpressionLike__1
+
+DEFAULT_WS: _Final[_Literal["\t\n\r "]]
 
 class NoMatch(Exception): ...
 
