@@ -1,7 +1,7 @@
 import typing as _typing
 
 _ParsingExpressionLike__0 = (
-    str | ParsingExpression | _typing.Callable[[], ParsingExpression]
+    str | ParsingExpression | _typing.Callable[[], _typing.Any]
 )
 
 _ParsingExpressionLike__1 = (
