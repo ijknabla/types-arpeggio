@@ -8,7 +8,7 @@ import pytest
 from arpeggio import EOF, ParserPython
 
 if TYPE_CHECKING:
-    from arpeggio import _ParsingExpressionLike
+    from arpeggio import _ParsingExpressionLike, _SyntaxClasses
 
 
 def optional_keyword_generator(
@@ -21,8 +21,14 @@ def optional_keyword_generator(
             yield tuple(item if j == i else None for j, _ in enumerate(args))
 
 
+def empty() -> _ParsingExpressionLike:
+    return EOF
+
+
 @pytest.mark.parametrize(
     """
+    comment_def,
+    syntax_classes,
     autokwd,
     debug,
     ignore_case,
@@ -32,6 +38,8 @@ def optional_keyword_generator(
     ws,
     """,
     optional_keyword_generator(
+        list["_ParsingExpressionLike"]([empty]),  # comment_def
+        list["_SyntaxClasses"]([{}]),  # syntax_classes
         [True],  # autokwd
         [True],  # debug
         [True],  # ignore_case
@@ -43,6 +51,8 @@ def optional_keyword_generator(
 )
 def test_parser_python_init(
     tempdir: Path,
+    comment_def: _ParsingExpressionLike,
+    syntax_classes: _SyntaxClasses,
     autokwd: bool,
     debug: bool,
     ignore_case: bool,
@@ -53,6 +63,8 @@ def test_parser_python_init(
 ) -> None:
     ParserPython(
         empty,
+        comment_def,
+        syntax_classes,
         autokwd=autokwd,
         debug=debug,
         ignore_case=ignore_case,
@@ -61,7 +73,3 @@ def test_parser_python_init(
         skipws=skipws,
         ws=ws,
     )
-
-
-def empty() -> _ParsingExpressionLike:
-    return EOF
