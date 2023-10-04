@@ -2,13 +2,18 @@
 
 [[package]]
 name = "arpeggio"
-version = "1.3"
+version = "2.0.0"
 description = "Packrat parser interpreter"
 optional = false
 python-versions = "*"
 files = [
-    {file = "Arpeggio-1.3.tar.gz", hash = "sha256:b1ac0da61ae31cf437301ae9ac4ab7dc5160300da5d5a9ae76d763b42161005f"},
+    {file = "Arpeggio-2.0.0-py2.py3-none-any.whl", hash = "sha256:448e332deb0e9ccd04046f1c6c14529d197f41bc2fdb3931e43fc209042fbdd3"},
+    {file = "Arpeggio-2.0.0.tar.gz", hash = "sha256:d6b03839019bb8a68785f9292ee6a36b1954eb84b925b84a6b8a5e1e26d3ed3d"},
 ]
+
+[package.extras]
+dev = ["mike", "mkdocs", "twine", "wheel"]
+test = ["coverage", "coveralls", "flake8", "pytest"]
 
 [[package]]
 name = "black"
@@ -534,4 +539,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7"
-content-hash = "ab5eeacb32fa1f9276d48d00bb7aa7b65a5eff4ca9fcde15eebc0ee994bb6525"
+content-hash = "118f914c5c0f75216af889d3b40a3d73a9e513679688402c7f1ab4857e8720e2"
