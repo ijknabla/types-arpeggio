@@ -1,5 +1,8 @@
 import typing as _typing
 
+from typing_extensions import NotRequired as _NotRequired
+from typing_extensions import TypedDict as _TypedDict
+
 _ParsingExpressionLike__0 = (
     str | ParsingExpression | _typing.Callable[[], _typing.Any]
 )
@@ -150,11 +153,17 @@ class CrossRef:
         position: int = ...,
     ) -> None: ...
 
+class _SyntaxClasses(_TypedDict):
+    StrMatch: _NotRequired[type[ParsingExpression]]
+    OrderedChoice: _NotRequired[type[ParsingExpression]]
+    Sequence: _NotRequired[type[ParsingExpression]]
+
 class ParserPython(Parser):
     def __init__(
         self,
         language_def: _ParsingExpressionLike,
         comment_def: _ParsingExpressionLike = ...,
+        syntax_classes: _SyntaxClasses = ...,
         *,
         autokwd: bool = ...,
         debug: bool = ...,
