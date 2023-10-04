@@ -1,4 +1,5 @@
 import typing as _typing
+from typing import IO as _IO
 
 from typing_extensions import NotRequired as _NotRequired
 from typing_extensions import TypedDict as _TypedDict
@@ -22,7 +23,14 @@ class NoMatch(Exception): ...
 
 class DebugPrinter:
     debug: bool
-    def __init__(self, *, debug: bool = ...) -> None: ...
+    file: _IO[str]
+    def __init__(
+        self,
+        *,
+        # DebugPrinter
+        debug: bool = ...,
+        file: _IO[str] = ...,
+    ) -> None: ...
     def dprint(
         self,
         message: str,
@@ -119,7 +127,9 @@ class PTNodeVisitor(DebugPrinter):
         self,
         defaults: bool = ...,
         *,
+        # DebugPrinter
         debug: bool = ...,
+        file: _IO[str] = ...,
     ) -> None: ...
 
 def visit_parse_tree(
@@ -139,7 +149,9 @@ class Parser(DebugPrinter):
         ignore_case: bool = ...,
         memoization: bool = ...,
         *,
+        # DebugPrinter
         debug: bool = ...,
+        file: _IO[str] = ...,
     ) -> None: ...
     def parse(
         self, _input: _typing.Any, file_name: _typing.Any = ...
@@ -164,13 +176,15 @@ class ParserPython(Parser):
         language_def: _ParsingExpressionLike,
         comment_def: _ParsingExpressionLike = ...,
         syntax_classes: _SyntaxClasses = ...,
-        *,
         autokwd: bool = ...,
-        debug: bool = ...,
         ignore_case: bool = ...,
         memoization: bool = ...,
         reduce_tree: bool = ...,
         skipws: bool = ...,
         ws: str = ...,
+        *,
+        # DebugPrinter
+        debug: bool = ...,
+        file: _IO[str] = ...,
     ) -> None: ...
     def _from_python(self, expression: _typing.Any) -> ParsingExpression: ...
