@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 import pytest
-from arpeggio import EOF, ParserPython
+from arpeggio import EOF, ParserPython, Sequence
 
 if TYPE_CHECKING:
     from arpeggio import _ParsingExpressionLike, _SyntaxClasses
@@ -23,6 +23,35 @@ def optional_keyword_generator(
 
 def empty() -> _ParsingExpressionLike:
     return EOF
+
+
+def pos_arguments_generator(
+    *args: tuple[Any, Any]
+) -> Generator[tuple[Any, ...], None, None]:
+    for i in range(0, len(args) + 1):
+        yield tuple(arg for _, arg in args[:i]), *(
+            arg for _, arg in args[:i]
+        ), *(default for default, _ in args[i:])
+
+
+@pytest.mark.parametrize(
+    """
+    args,
+    comment_def,
+    syntax_classes,
+    """,
+    pos_arguments_generator(
+        (None, empty),
+        ({}, {"Sequence": Sequence}),
+    ),
+)
+def test_parser_python_init_args(
+    args: tuple[Any, ...],
+    comment_def: _ParsingExpressionLike,
+    syntax_classes: _SyntaxClasses,
+) -> None:
+    parser = ParserPython(empty, *args)
+    assert parser.syntax_classes == syntax_classes
 
 
 @pytest.mark.parametrize(

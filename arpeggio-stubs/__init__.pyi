@@ -177,6 +177,8 @@ class _SyntaxClasses(_TypedDict):
     Sequence: _NotRequired[type[ParsingExpression]]
 
 class ParserPython(Parser):
+    syntax_classes: _SyntaxClasses
+
     def __init__(
         self,
         # ParserPython
