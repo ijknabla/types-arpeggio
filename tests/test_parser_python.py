@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Collection, Generator
+from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 import pytest
@@ -41,6 +42,7 @@ def optional_keyword_generator(
     ),
 )
 def test_parser_python_init(
+    tempdir: Path,
     autokwd: bool,
     debug: bool,
     ignore_case: bool,
