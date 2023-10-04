@@ -23,3 +23,6 @@ pyproject-flake8 = "^5"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.flake8]
+exclude = '.venv,.git'
