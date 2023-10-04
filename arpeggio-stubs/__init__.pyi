@@ -156,10 +156,12 @@ class ParserPython(Parser):
         language_def: _ParsingExpressionLike,
         comment_def: _ParsingExpressionLike = ...,
         *,
+        autokwd: bool = ...,
         debug: bool = ...,
-        reduce_tree: bool = ...,
-        skipws: bool = ...,
         ignore_case: bool = ...,
         memoization: bool = ...,
+        reduce_tree: bool = ...,
+        skipws: bool = ...,
+        ws: str = ...,
     ) -> None: ...
     def _from_python(self, expression: _typing.Any) -> ParsingExpression: ...
