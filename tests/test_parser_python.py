@@ -27,6 +27,23 @@ def empty() -> _ParsingExpressionLike:
     return EOF
 
 
+comment_def_values = DefaultAndValues["_ParsingExpressionLike | None"](
+    None, [empty]
+)
+syntax_classes_values = DefaultAndValues["_SyntaxClasses"](
+    {}, [{"Sequence": Sequence}]
+)
+
+skipws_values = DefaultAndValues[bool](True, [False])
+ws_values = DefaultAndValues[str](DEFAULT_WS, ["\u3000"])
+
+reduce_tree_values = (
+    autokwd_values
+) = ignore_case_values = memoization_values = DefaultAndValues[bool](
+    False, [True]
+)
+
+
 @pytest.mark.parametrize(
     "args,"
     "comment_def,"
@@ -38,22 +55,20 @@ def empty() -> _ParsingExpressionLike:
     "ignore_case,"
     "memoization,",
     iter_pos_args(
-        DefaultAndValues["_ParsingExpressionLike | None"](None, [empty]),
-        DefaultAndValues["_SyntaxClasses | None"](
-            {}, [{"Sequence": Sequence}]
-        ),
-        DefaultAndValues[bool](True, [False]),
-        DefaultAndValues[str](DEFAULT_WS, ["\u3000"]),
-        DefaultAndValues[bool](False, [True]),
-        DefaultAndValues[bool](False, [True]),
-        DefaultAndValues[bool](False, [True]),
-        DefaultAndValues[bool](False, [True]),
+        comment_def_values,
+        syntax_classes_values,
+        skipws_values,
+        ws_values,
+        reduce_tree_values,
+        autokwd_values,
+        ignore_case_values,
+        memoization_values,
     ),
 )
 def test_parser_python_positional_arguments(
     args: tuple[Any, ...],
     comment_def: _ParsingExpressionLike | None,
-    syntax_classes: _SyntaxClasses | None,
+    syntax_classes: _SyntaxClasses,
     skipws: bool,
     ws: str | None,
     reduce_tree: bool,
