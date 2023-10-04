@@ -137,13 +137,19 @@ def visit_parse_tree(
 ) -> _typing.Any: ...
 
 class Parser(DebugPrinter):
+    skipws: bool
+    ws: str
+    reduce_tree: bool
+    autokwd: bool
     ignore_case: bool
+    memoization: bool
     parser_model: ParsingExpression
     comments_model: ParsingExpression | None
     def __init__(
         self,
+        # Parser
         skipws: bool = ...,
-        ws: str = ...,
+        ws: str | None = ...,
         reduce_tree: bool = ...,
         autokwd: bool = ...,
         ignore_case: bool = ...,
@@ -176,12 +182,13 @@ class ParserPython(Parser):
         language_def: _ParsingExpressionLike,
         comment_def: _ParsingExpressionLike = ...,
         syntax_classes: _SyntaxClasses = ...,
+        # Parser
+        skipws: bool = ...,
+        ws: str | None = ...,
+        reduce_tree: bool = ...,
         autokwd: bool = ...,
         ignore_case: bool = ...,
         memoization: bool = ...,
-        reduce_tree: bool = ...,
-        skipws: bool = ...,
-        ws: str = ...,
         *,
         # DebugPrinter
         debug: bool = ...,
