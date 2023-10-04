@@ -1,7 +1,13 @@
 import typing as _typing
+from typing import IO as _IO
+
+from typing_extensions import Final as _Final
+from typing_extensions import Literal as _Literal
+from typing_extensions import NotRequired as _NotRequired
+from typing_extensions import TypedDict as _TypedDict
 
 _ParsingExpressionLike__0 = (
-    str | ParsingExpression | _typing.Callable[[], ParsingExpression]
+    str | ParsingExpression | _typing.Callable[[], _typing.Any]
 )
 
 _ParsingExpressionLike__1 = (
@@ -15,11 +21,20 @@ _ParsingExpressionLike__1 = (
 
 _ParsingExpressionLike = _ParsingExpressionLike__1
 
+DEFAULT_WS: _Final[_Literal["\t\n\r "]]
+
 class NoMatch(Exception): ...
 
 class DebugPrinter:
     debug: bool
-    def __init__(self, *, debug: bool = ...) -> None: ...
+    file: _IO[str]
+    def __init__(
+        self,
+        *,
+        # DebugPrinter
+        debug: bool = ...,
+        file: _IO[str] = ...,
+    ) -> None: ...
     def dprint(
         self,
         message: str,
@@ -116,7 +131,9 @@ class PTNodeVisitor(DebugPrinter):
         self,
         defaults: bool = ...,
         *,
+        # DebugPrinter
         debug: bool = ...,
+        file: _IO[str] = ...,
     ) -> None: ...
 
 def visit_parse_tree(
@@ -124,19 +141,27 @@ def visit_parse_tree(
 ) -> _typing.Any: ...
 
 class Parser(DebugPrinter):
+    skipws: bool
+    ws: str
+    reduce_tree: bool
+    autokwd: bool
     ignore_case: bool
+    memoization: bool
     parser_model: ParsingExpression
     comments_model: ParsingExpression | None
     def __init__(
         self,
+        # Parser
         skipws: bool = ...,
-        ws: str = ...,
+        ws: str | None = ...,
         reduce_tree: bool = ...,
         autokwd: bool = ...,
         ignore_case: bool = ...,
         memoization: bool = ...,
         *,
+        # DebugPrinter
         debug: bool = ...,
+        file: _IO[str] = ...,
     ) -> None: ...
     def parse(
         self, _input: _typing.Any, file_name: _typing.Any = ...
@@ -150,18 +175,30 @@ class CrossRef:
         position: int = ...,
     ) -> None: ...
 
+class _SyntaxClasses(_TypedDict):
+    StrMatch: _NotRequired[type[ParsingExpression]]
+    OrderedChoice: _NotRequired[type[ParsingExpression]]
+    Sequence: _NotRequired[type[ParsingExpression]]
+
 class ParserPython(Parser):
+    syntax_classes: _SyntaxClasses
+
     def __init__(
         self,
+        # ParserPython
         language_def: _ParsingExpressionLike,
-        comment_def: _ParsingExpressionLike = ...,
-        *,
+        comment_def: _ParsingExpressionLike | None = ...,
+        syntax_classes: _SyntaxClasses | None = ...,
+        # Parser
+        skipws: bool = ...,
+        ws: str | None = ...,
+        reduce_tree: bool = ...,
         autokwd: bool = ...,
-        debug: bool = ...,
         ignore_case: bool = ...,
         memoization: bool = ...,
-        reduce_tree: bool = ...,
-        skipws: bool = ...,
-        ws: str = ...,
+        *,
+        # DebugPrinter
+        debug: bool = ...,
+        file: _IO[str] = ...,
     ) -> None: ...
     def _from_python(self, expression: _typing.Any) -> ParsingExpression: ...
