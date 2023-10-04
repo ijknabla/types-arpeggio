@@ -4,6 +4,9 @@ version = "0.0.1-dev"
 description = ""
 authors = ["ijknabla <ijknabla@gmail.com>"]
 readme = "README.md"
+packages = [
+    { include = "arpeggio-stubs" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.7"
