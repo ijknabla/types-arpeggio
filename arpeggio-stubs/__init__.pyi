@@ -179,9 +179,10 @@ class _SyntaxClasses(_TypedDict):
 class ParserPython(Parser):
     def __init__(
         self,
+        # ParserPython
         language_def: _ParsingExpressionLike,
-        comment_def: _ParsingExpressionLike = ...,
-        syntax_classes: _SyntaxClasses = ...,
+        comment_def: _ParsingExpressionLike | None = ...,
+        syntax_classes: _SyntaxClasses | None = ...,
         # Parser
         skipws: bool = ...,
         ws: str | None = ...,
