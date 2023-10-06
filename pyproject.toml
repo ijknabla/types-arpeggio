@@ -31,6 +31,11 @@ pytest-cov = "^4.1.0"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.coverage.run]
+omit = [
+    "*/arpeggio/tests/*"
+]
+
 [tool.black]
 line-length = 79
 
@@ -40,3 +45,6 @@ exclude = '.venv,.git'
 [tool.isort]
 line_length = 79
 profile = "black"
+
+[tool.pytest.ini_options]
+addopts = "--cov=arpeggio --cov-branch --cov-report=term-missing"
