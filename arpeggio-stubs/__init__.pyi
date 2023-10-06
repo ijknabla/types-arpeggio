@@ -1,5 +1,6 @@
 import typing as _typing
 from typing import IO as _IO
+from typing import Any as _Any
 
 from typing_extensions import Final as _Final
 from typing_extensions import Literal as _Literal
@@ -117,8 +118,24 @@ class EndOfFile(Match):
 def EOF() -> EndOfFile: ...
 
 class ParseTreeNode:
+    rule: ParsingExpression
+    rule_name: str
     position: int
-    position_end: int
+    error: bool
+    comments: _Any | None
+
+    def __init__(
+        self,
+        rule: ParsingExpression,
+        position: int,
+        error: bool,
+    ) -> None: ...
+    @property
+    def name(self) -> str: ...
+    @property
+    def position_end(self) -> int: ...
+    def visit(self, visitor: PTNodeVisitor) -> _Any: ...
+    def tree_str(self, indent: int = ...) -> str: ...
 
 class Terminal(ParseTreeNode):
     value: str
