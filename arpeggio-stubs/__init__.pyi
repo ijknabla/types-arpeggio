@@ -1,5 +1,9 @@
+from __future__ import annotations
+
 import typing as _typing
+from collections.abc import Iterable as _Iterable
 from typing import IO as _IO
+from typing import Any as _Any
 
 from typing_extensions import Final as _Final
 from typing_extensions import Literal as _Literal
@@ -116,17 +120,60 @@ class EndOfFile(Match):
 
 def EOF() -> EndOfFile: ...
 
+# __LINE__:966
 class ParseTreeNode:
+    rule: ParsingExpression
+    rule_name: str
     position: int
-    position_end: int
+    error: bool
+    comments: _Any | None
 
+    def __init__(
+        self,
+        rule: ParsingExpression,
+        position: int,
+        error: bool,
+    ) -> None: ...
+    @property
+    def name(self) -> str: ...
+    @property
+    def position_end(self) -> int: ...
+    def visit(self, visitor: PTNodeVisitor) -> _Any: ...
+    def tree_str(self, indent: int = ...) -> str: ...
+
+# __LINE__:1043
 class Terminal(ParseTreeNode):
     value: str
+    suppress: bool
+    extra_info: _Any | None
+    def __init__(
+        self,
+        rule: ParsingExpression,
+        position: int,
+        value: str,
+        error: bool = ...,
+        suppress: bool = ...,
+        extra_info: _Any | None = ...,
+    ) -> None: ...
+    @property
+    def desc(self) -> str: ...
     def flat_str(self) -> str: ...
-    def __eq__(self, other: _typing.Any) -> bool: ...
+    def __unicode__(self) -> str: ...
 
-class NonTerminal(ParseTreeNode, _typing.List[ParseTreeNode]):
+class NonTerminal(ParseTreeNode, list[ParseTreeNode]):
+    def __init__(
+        self,
+        rule: ParsingExpression,
+        nodes: _Iterable[ParseTreeNode],
+        error: bool = ...,
+        _filtered: bool = ...,
+    ) -> None: ...
+    @property
+    def value(self) -> str: ...
+    @property
+    def desc(self) -> str: ...
     def flat_str(self) -> str: ...
+    def __getattr__(self, rule_name: str) -> NonTerminal: ...
 
 class PTNodeVisitor(DebugPrinter):
     def __init__(
