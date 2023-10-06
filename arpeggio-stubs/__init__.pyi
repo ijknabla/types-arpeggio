@@ -117,6 +117,7 @@ class EndOfFile(Match):
 
 def EOF() -> EndOfFile: ...
 
+# __LINE__:966
 class ParseTreeNode:
     rule: ParsingExpression
     rule_name: str
@@ -137,9 +138,26 @@ class ParseTreeNode:
     def visit(self, visitor: PTNodeVisitor) -> _Any: ...
     def tree_str(self, indent: int = ...) -> str: ...
 
+# __LINE__:1043
 class Terminal(ParseTreeNode):
     value: str
+    suppress: bool
+    extra_info: _Any | None
+    def __init__(
+        self,
+        rule: ParsingExpression,
+        position: int,
+        value: str,
+        error: bool = ...,
+        suppress: bool = ...,
+        extra_info: _Any | None = ...,
+    ) -> None: ...
+    @property
+    def desc(self) -> str: ...
     def flat_str(self) -> str: ...
+    def __str__(self) -> str: ...
+    def __unicode__(self) -> str: ...
+    def __repr__(self) -> str: ...
     def __eq__(self, other: _typing.Any) -> bool: ...
 
 class NonTerminal(ParseTreeNode, _typing.List[ParseTreeNode]):
