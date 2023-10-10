@@ -64,6 +64,8 @@ class ParsingExpression:
     def parse(self, parser: Parser) -> ParseTreeNode: ...
 
 class Sequence(ParsingExpression):
+    ws: str | None
+    skipws: bool | None
     def __init__(
         self,
         # ParsingExpression
@@ -72,9 +74,24 @@ class Sequence(ParsingExpression):
         root: bool = ...,
         nodes: _typing.Iterable[ParsingExpression] = ...,
         suppress: bool = ...,
+        # Sequence
+        ws: str | None = ...,
+        skipws: bool | None = ...,
     ) -> None: ...
 
-class OrderedChoice(Sequence): ...
+class OrderedChoice(Sequence):
+    def __init__(
+        self,
+        # ParsingExpression
+        *elements: _ParsingExpressionLike,
+        rule_name: str = ...,
+        root: bool = ...,
+        nodes: _typing.Iterable[ParsingExpression] = ...,
+        suppress: bool = ...,
+        # Sequence
+        ws: str | None = ...,
+        skipws: bool | None = ...,
+    ) -> None: ...
 
 class Repetition(ParsingExpression):
     """
