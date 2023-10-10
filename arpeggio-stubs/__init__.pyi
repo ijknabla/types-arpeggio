@@ -46,23 +46,52 @@ class DebugPrinter:
     ) -> None: ...
 
 class ParsingExpression:
+    rule_name: str
+    root: bool
+    nodes: _typing.MutableSequence[ParsingExpression]
+    suppress: bool
     def __init__(
         self,
+        # ParsingExpression
         *elements: _ParsingExpressionLike,
         rule_name: str = ...,
         root: bool = ...,
         nodes: _typing.Iterable[ParsingExpression] = ...,
         suppress: bool = ...,
     ) -> None: ...
-    root: bool
-    rule_name: str
-    nodes: _typing.MutableSequence[ParsingExpression]
     @property
     def name(self) -> str: ...
     def parse(self, parser: Parser) -> ParseTreeNode: ...
 
-class Sequence(ParsingExpression): ...
-class OrderedChoice(Sequence): ...
+class Sequence(ParsingExpression):
+    ws: str | None
+    skipws: bool | None
+    def __init__(
+        self,
+        # ParsingExpression
+        *elements: _ParsingExpressionLike,
+        rule_name: str = ...,
+        root: bool = ...,
+        nodes: _typing.Iterable[ParsingExpression] = ...,
+        suppress: bool = ...,
+        # Sequence
+        ws: str | None = ...,
+        skipws: bool | None = ...,
+    ) -> None: ...
+
+class OrderedChoice(Sequence):
+    def __init__(
+        self,
+        # ParsingExpression
+        *elements: _ParsingExpressionLike,
+        rule_name: str = ...,
+        root: bool = ...,
+        nodes: _typing.Iterable[ParsingExpression] = ...,
+        suppress: bool = ...,
+        # Sequence
+        ws: str | None = ...,
+        skipws: bool | None = ...,
+    ) -> None: ...
 
 class Repetition(ParsingExpression):
     """
