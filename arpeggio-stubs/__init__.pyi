@@ -1,25 +1,24 @@
 from __future__ import annotations
 
-import typing as _typing
 from collections.abc import Callable as _Callable
 from collections.abc import Iterable as _Iterable
+from collections.abc import MutableSequence as _MutableSequence
 from collections.abc import Sequence as _Sequence
 from typing import IO as _IO
 from typing import Any as _Any
 
 from typing_extensions import Final as _Final
-from typing_extensions import Literal as _Literal
 from typing_extensions import NotRequired as _NotRequired
 from typing_extensions import TypedDict as _TypedDict
 
 _ParsingExpressionLike = (
     str
     | ParsingExpression
-    | _Sequence["_ParsingExpressionLike"]
-    | _Callable[[], "_ParsingExpressionLike"]
+    | _Sequence[_ParsingExpressionLike]
+    | _Callable[[], _ParsingExpressionLike]
 )
 
-DEFAULT_WS: _Final[_Literal["\t\n\r "]]
+DEFAULT_WS: _Final = "\t\n\r "
 
 class NoMatch(Exception): ...
 
@@ -42,7 +41,7 @@ class DebugPrinter:
 class ParsingExpression:
     rule_name: str
     root: bool
-    nodes: _typing.MutableSequence[ParsingExpression]
+    nodes: _MutableSequence[ParsingExpression]
     suppress: bool
     def __init__(
         self,
@@ -50,7 +49,7 @@ class ParsingExpression:
         *elements: _ParsingExpressionLike,
         rule_name: str = ...,
         root: bool = ...,
-        nodes: _typing.Iterable[ParsingExpression] = ...,
+        nodes: _Iterable[ParsingExpression] = ...,
         suppress: bool = ...,
     ) -> None: ...
     @property
@@ -66,7 +65,7 @@ class Sequence(ParsingExpression):
         *elements: _ParsingExpressionLike,
         rule_name: str = ...,
         root: bool = ...,
-        nodes: _typing.Iterable[ParsingExpression] = ...,
+        nodes: _Iterable[ParsingExpression] = ...,
         suppress: bool = ...,
         # Sequence
         ws: str | None = ...,
@@ -80,7 +79,7 @@ class OrderedChoice(Sequence):
         *elements: _ParsingExpressionLike,
         rule_name: str = ...,
         root: bool = ...,
-        nodes: _typing.Iterable[ParsingExpression] = ...,
+        nodes: _Iterable[ParsingExpression] = ...,
         suppress: bool = ...,
         # Sequence
         ws: str | None = ...,
@@ -89,8 +88,8 @@ class OrderedChoice(Sequence):
 
 class Repetition(ParsingExpression):
     """
-    eolterm: _typing.Any
-    sep: _typing.Any
+    eolterm: _Any
+    sep: _Any
     """
 
     def __init__(
@@ -98,7 +97,7 @@ class Repetition(ParsingExpression):
         *elements: _ParsingExpressionLike,
         rule_name: str = ...,
         root: bool = ...,
-        nodes: _typing.Iterable[_ParsingExpressionLike] = ...,
+        nodes: _Iterable[_ParsingExpressionLike] = ...,
         suppress: bool = ...,
         sep: _ParsingExpressionLike = ...,
     ) -> None: ...
@@ -210,7 +209,7 @@ class PTNodeVisitor(DebugPrinter):
 
 def visit_parse_tree(
     parse_tree: ParseTreeNode, visitor: PTNodeVisitor
-) -> _typing.Any: ...
+) -> _Any: ...
 
 class Parser(DebugPrinter):
     skipws: bool
@@ -235,9 +234,7 @@ class Parser(DebugPrinter):
         debug: bool = ...,
         file: _IO[str] = ...,
     ) -> None: ...
-    def parse(
-        self, _input: _typing.Any, file_name: _typing.Any = ...
-    ) -> ParseTreeNode: ...
+    def parse(self, _input: _Any, file_name: _Any = ...) -> ParseTreeNode: ...
 
 class CrossRef:
     target_rule_name: str
@@ -273,4 +270,4 @@ class ParserPython(Parser):
         debug: bool = ...,
         file: _IO[str] = ...,
     ) -> None: ...
-    def _from_python(self, expression: _typing.Any) -> ParsingExpression: ...
+    def _from_python(self, expression: _Any) -> ParsingExpression: ...
