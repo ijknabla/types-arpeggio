@@ -15,11 +15,8 @@ from typing_extensions import TypedDict as _TypedDict
 _ParsingExpressionLike = (
     str
     | ParsingExpression
+    | _Sequence["_ParsingExpressionLike"]
     | _Callable[[], "_ParsingExpressionLike"]
-    | _Sequence[
-        str | ParsingExpression | _Callable[[], "_ParsingExpressionLike"]
-    ]
-    | _Sequence[_Sequence[_Any]]
 )
 
 DEFAULT_WS: _Final[_Literal["\t\n\r "]]
