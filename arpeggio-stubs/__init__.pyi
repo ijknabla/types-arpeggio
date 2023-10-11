@@ -8,7 +8,6 @@ from typing import IO as _IO
 from typing import Any as _Any
 
 from typing_extensions import Final as _Final
-from typing_extensions import Literal as _Literal
 from typing_extensions import NotRequired as _NotRequired
 from typing_extensions import TypedDict as _TypedDict
 
@@ -19,7 +18,7 @@ _ParsingExpressionLike = (
     | _Callable[[], _ParsingExpressionLike]
 )
 
-DEFAULT_WS: _Final[_Literal["\t\n\r "]]
+DEFAULT_WS: _Final = "\t\n\r "
 
 class NoMatch(Exception): ...
 
