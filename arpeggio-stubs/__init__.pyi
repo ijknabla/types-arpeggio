@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-import typing as _typing
 from collections.abc import Callable as _Callable
 from collections.abc import Iterable as _Iterable
+from collections.abc import MutableSequence as _MutableSequence
 from collections.abc import Sequence as _Sequence
 from typing import IO as _IO
 from typing import Any as _Any
@@ -41,7 +41,7 @@ class DebugPrinter:
 class ParsingExpression:
     rule_name: str
     root: bool
-    nodes: _typing.MutableSequence[ParsingExpression]
+    nodes: _MutableSequence[ParsingExpression]
     suppress: bool
     def __init__(
         self,
