@@ -50,7 +50,7 @@ class ParsingExpression:
         *elements: _ParsingExpressionLike,
         rule_name: str = ...,
         root: bool = ...,
-        nodes: _typing.Iterable[ParsingExpression] = ...,
+        nodes: _Iterable[ParsingExpression] = ...,
         suppress: bool = ...,
     ) -> None: ...
     @property
@@ -66,7 +66,7 @@ class Sequence(ParsingExpression):
         *elements: _ParsingExpressionLike,
         rule_name: str = ...,
         root: bool = ...,
-        nodes: _typing.Iterable[ParsingExpression] = ...,
+        nodes: _Iterable[ParsingExpression] = ...,
         suppress: bool = ...,
         # Sequence
         ws: str | None = ...,
@@ -80,7 +80,7 @@ class OrderedChoice(Sequence):
         *elements: _ParsingExpressionLike,
         rule_name: str = ...,
         root: bool = ...,
-        nodes: _typing.Iterable[ParsingExpression] = ...,
+        nodes: _Iterable[ParsingExpression] = ...,
         suppress: bool = ...,
         # Sequence
         ws: str | None = ...,
@@ -98,7 +98,7 @@ class Repetition(ParsingExpression):
         *elements: _ParsingExpressionLike,
         rule_name: str = ...,
         root: bool = ...,
-        nodes: _typing.Iterable[_ParsingExpressionLike] = ...,
+        nodes: _Iterable[_ParsingExpressionLike] = ...,
         suppress: bool = ...,
         sep: _ParsingExpressionLike = ...,
     ) -> None: ...
