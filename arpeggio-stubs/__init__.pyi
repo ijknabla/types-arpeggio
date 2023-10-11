@@ -88,8 +88,8 @@ class OrderedChoice(Sequence):
 
 class Repetition(ParsingExpression):
     """
-    eolterm: _typing.Any
-    sep: _typing.Any
+    eolterm: _Any
+    sep: _Any
     """
 
     def __init__(
@@ -209,7 +209,7 @@ class PTNodeVisitor(DebugPrinter):
 
 def visit_parse_tree(
     parse_tree: ParseTreeNode, visitor: PTNodeVisitor
-) -> _typing.Any: ...
+) -> _Any: ...
 
 class Parser(DebugPrinter):
     skipws: bool
@@ -234,9 +234,7 @@ class Parser(DebugPrinter):
         debug: bool = ...,
         file: _IO[str] = ...,
     ) -> None: ...
-    def parse(
-        self, _input: _typing.Any, file_name: _typing.Any = ...
-    ) -> ParseTreeNode: ...
+    def parse(self, _input: _Any, file_name: _Any = ...) -> ParseTreeNode: ...
 
 class CrossRef:
     target_rule_name: str
@@ -272,4 +270,4 @@ class ParserPython(Parser):
         debug: bool = ...,
         file: _IO[str] = ...,
     ) -> None: ...
-    def _from_python(self, expression: _typing.Any) -> ParsingExpression: ...
+    def _from_python(self, expression: _Any) -> ParsingExpression: ...
