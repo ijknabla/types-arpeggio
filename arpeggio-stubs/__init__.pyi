@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import typing as _typing
+from collections.abc import Callable as _Callable
 from collections.abc import Iterable as _Iterable
+from collections.abc import Sequence as _Sequence
 from typing import IO as _IO
 from typing import Any as _Any
 
@@ -10,20 +12,12 @@ from typing_extensions import Literal as _Literal
 from typing_extensions import NotRequired as _NotRequired
 from typing_extensions import TypedDict as _TypedDict
 
-_ParsingExpressionLike__0 = (
-    str | ParsingExpression | _typing.Callable[[], _typing.Any]
+_ParsingExpressionLike = (
+    str
+    | ParsingExpression
+    | _Sequence["_ParsingExpressionLike"]
+    | _Callable[[], "_ParsingExpressionLike"]
 )
-
-_ParsingExpressionLike__1 = (
-    _ParsingExpressionLike__0
-    | _typing.Sequence[_ParsingExpressionLike__0]
-    | _typing.Sequence[
-        _ParsingExpressionLike__0
-        | _typing.Sequence[_ParsingExpressionLike__0 | object]
-    ]
-)
-
-_ParsingExpressionLike = _ParsingExpressionLike__1
 
 DEFAULT_WS: _Final[_Literal["\t\n\r "]]
 
