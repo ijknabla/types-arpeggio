@@ -18,21 +18,24 @@ def iter_pos_args(
 ) -> Generator[tuple[Any, ...], None, None]:
     defaults = tuple(arg.default for arg in args)
 
-    yield (), *defaults
+    yield ((), *defaults)
 
     for i, arg in enumerate(args):
         j = i + 1
         for value in arg.values:
-            yield (*defaults[:i], value), *defaults[:i], value, *defaults[j:]
+            yield ((*defaults[:i], value), *defaults[:i], value, *defaults[j:])
 
 
 def iter_kw_args(
     **kwargs: DefaultAndValues[Any],
 ) -> Generator[tuple[Any, ...], None, None]:
-    yield {}, *(arg.default for arg in kwargs.values())
+    yield ({}, *(arg.default for arg in kwargs.values()))
     for name, arg in kwargs.items():
         for value in arg.values:
-            yield {name: value}, *(
-                value if name_ == name else arg_.default
-                for name_, arg_ in kwargs.items()
+            yield (
+                {name: value},
+                *(
+                    value if name_ == name else arg_.default
+                    for name_, arg_ in kwargs.items()
+                ),
             )
